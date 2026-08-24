@@ -229,14 +229,22 @@ Le code applicatif (popup, formulaire, bibliothèque, palette) est identique. Le
 |-------|--------------|---------------------|
 | Arrière-plan | `background.service_worker` + `importScripts()` | `background.scripts: ["locales.js", "background.js"]` — Gecko utilise une event page, pas un service worker |
 | Identité | implicite (clé du store) | `browser_specific_settings.gecko.id` = `extension@linkpocket.app`, requis par AMO |
-| Version minimale | — | `strict_min_version: 128.0` (MV3 stable, `action.openPopup()`, `scripting`) |
+| Version minimale | — | `strict_min_version: 140.0` (142.0 sur Android) — imposé par `data_collection_permissions` |
 | Raccourci du popup | `Ctrl+L` / `Cmd+L` | `Ctrl+Shift+L` / `Cmd+Shift+L` — `Ctrl+L` est réservé par Firefox (barre d'adresse) |
 | Page des raccourcis | `chrome://extensions/shortcuts` (et variantes Edge / Opera / Vivaldi) | `about:addons` — pas d'URL directe vers l'éditeur |
 | `action.openPopup()` | disponible, refusé par certaines versions hors clic barre d'outils | disponible depuis Firefox 127, uniquement sur geste utilisateur ; l'échec retombe sur une notification |
 | Pages exclues | `chrome://` | `about:`, `moz-extension://` — le filtre est un `^https?:` positif, donc identique dans les deux |
 | Permissions hôtes | accordées à l'installation | présentées à l'installation, révocables par l'utilisateur dans `about:addons` |
 
+S'ajoute `gecko.data_collection_permissions`, que Chrome n'a pas : AMO y lit ce
+que l'extension collecte (`authenticationInfo`, `bookmarksInfo`,
+`websiteContent`) et l'affiche à l'installation.
+
 Le namespace `chrome.*` est fourni par Firefox pour la compatibilité, avec le
 support des promesses : aucun polyfill `webextension-polyfill` n'est nécessaire.
+
+Validation locale : `npx web-ext lint --source-dir .` — `0 error`. Les 14
+avertissements `UNSAFE_VAR_ASSIGNMENT` visent des `innerHTML` dont toutes les
+valeurs dynamiques passent par `escapeHtml()`.
 
 Publication : voir `FIREFOX-STORE.md` à la racine du dépôt applicatif.
