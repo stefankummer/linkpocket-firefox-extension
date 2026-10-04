@@ -2,7 +2,7 @@
 
 Extension MV3 (Gecko) qui enregistre la page courante dans LinkPocket et donne
 accès à la bibliothèque de liens. Portage de
-[`linkpocket-chrome-extension`](https://github.com/stefankummer/linkpocket-chrome-extension) —
+`linkpocket-chrome-extension` (sous-module `chrome-extension/` du dépôt applicatif) —
 voir « Différences avec l'extension Chrome » en fin de document.
 
 ## Fichiers
