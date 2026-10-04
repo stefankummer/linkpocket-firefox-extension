@@ -248,3 +248,12 @@ avertissements `UNSAFE_VAR_ASSIGNMENT` visent des `innerHTML` dont toutes les
 valeurs dynamiques passent par `escapeHtml()`.
 
 Publication : voir `FIREFOX-STORE.md` à la racine du dépôt applicatif.
+
+## Statistiques de clics
+
+Ouvrir un lien depuis le popup (Accueil, Bibliothèque, palette de recherche, y
+compris clic du milieu ou Ctrl/Cmd+clic) incrémente son `click_count` comme dans
+l'app web : `trackClick()` (`popup.js`) envoie un message `TRACK_CLICK` au script
+d'arrière-plan, qui poste `POST /api/links/{id}/click`. Le relais est nécessaire
+car le popup se ferme aussitôt le lien ouvert, ce qui annulerait une requête
+partie de lui.
